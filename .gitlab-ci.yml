@@ -16,7 +16,7 @@ job3:
     - echo "build"
 
 job4:
-  stage: test
+  stage: deploy
   script:
     - echo "test"
 
