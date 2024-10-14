@@ -1,4 +1,10 @@
+stages:
+  - before
+  - build
+  - last
+
 notify_job:
+  stage: last
   image: alpine:latest  # 使用最新的 Alpine 镜像
   before_script:
     - apk add --no-cache msmtp  # 安装 msmtp
