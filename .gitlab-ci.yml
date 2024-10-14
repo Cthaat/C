@@ -1,14 +1,19 @@
 notify_job:
+  image: alpine:latest  # 使用最新的 Alpine 镜像
   before_script:
-    - apk add --no-cache msmtp  # 只安装 msmtp
+    - apk add --no-cache msmtp  # 安装 msmtp
     - echo "account default" > /etc/msmtprc  # 创建 msmtp 配置文件
     - echo "host smtp.gmail.com" >> /etc/msmtprc  # Gmail SMTP 服务器
     - echo "port 587" >> /etc/msmtprc  # 使用 TLS
     - echo "auth on" >> /etc/msmtprc
     - echo "user edge27452696803@gmail.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
-    - echo "password YOUR_APP_PASSWORD" >> /etc/msmtprc  # 替换为您的应用密码
+    - echo "password 123456..a" >> /etc/msmtprc  # 替换为您的应用密码
     - echo "from edge27452696803@gmail.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
     - echo "logfile /var/log/msmtp.log" >> /etc/msmtprc  # 日志文件
+    - echo "tls on" >> /etc/msmtprc  # 启用 TLS
+    - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
     - chmod 600 /etc/msmtprc  # 设置权限
   script:
-    - echo "GitLab CI 通知： 测试任务已完成" | msmtp -a default recipient@example.com  # 替换为收件人邮箱
+    - apk add --no-cache curl  # 安装 curl
+    - curl -v telnet://smtp.gmail.com:587  # 测试与 Gmail SMTP 的连接
+    - echo "GitLab CI 通知： 测试任务已完成" | msmtp -a default 2745296803@qq.com  # 替换为收件人邮箱
