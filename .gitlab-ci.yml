@@ -6,9 +6,9 @@ notify_job:
     - echo "host smtp.gmail.com" >> /etc/msmtprc  # Gmail SMTP 服务器
     - echo "port 587" >> /etc/msmtprc  # 使用 TLS
     - echo "auth on" >> /etc/msmtprc
-    - echo "user edge27452696803@gmail.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
-    - echo "password 123456..a" >> /etc/msmtprc  # 替换为您的应用密码
-    - echo "from edge27452696803@gmail.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
+    - echo "user 2745296803@qq.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
+    - echo "password 156652..a" >> /etc/msmtprc  # 替换为您的应用密码
+    - echo "from 2745296803@qq.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
     - echo "logfile /var/log/msmtp.log" >> /etc/msmtprc  # 日志文件
     - echo "tls on" >> /etc/msmtprc  # 启用 TLS
     - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
@@ -16,4 +16,4 @@ notify_job:
   script:
     - apk add --no-cache curl  # 安装 curl
     - curl -v telnet://smtp.gmail.com:587  # 测试与 Gmail SMTP 的连接
-    - echo "GitLab CI 通知： 测试任务已完成" | msmtp -a default 2745296803@qq.com  # 替换为收件人邮箱
+    - echo "GitLab CI 通知： 测试任务已完成" | msmtp -a default  edge27452696803@gmail.com # 替换为收件人邮箱
