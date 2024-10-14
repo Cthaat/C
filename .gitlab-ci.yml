@@ -24,8 +24,3 @@ job5:
   stage: deploy
   script:
     - echo "deploy"
-
-send_email:
-  stage: deploy
-  script:
-    - apt-get update
