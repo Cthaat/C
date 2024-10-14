@@ -24,3 +24,9 @@ job5:
   stage: deploy
   script:
     - echo "deploy"
+
+send_email:
+  stage: deploy
+  script:
+    - apt-get update && apt-get install -y mailutils
+    - echo "Build succeeded!" | mail -s "Build Notification" edge27452696803@gmail.com
