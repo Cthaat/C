@@ -1,26 +1,14 @@
-job1:
-  stage: .pre
+notify_job:
+  before_script:
+    - apk add --no-cache msmtp msmtp-mta  # 安装 msmtp
+    - echo "account default" > /etc/msmtprc  # 创建 msmtp 配置文件
+    - echo "host smtp.gmail.com" >> /etc/msmtprc  # Gmail SMTP 服务器
+    - echo "port 587" >> /etc/msmtprc  # 使用 TLS
+    - echo "auth on" >> /etc/msmtprc
+    - echo "user edge27452696803@gmail.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
+    - echo "password YOUR_APP_PASSWORD" >> /etc/msmtprc  # 替换为您的应用密码
+    - echo "from edge27452696803@gmail.com" >> /etc/msmtprc  # 替换为您的 Gmail 地址
+    - echo "logfile /var/log/msmtp.log" >> /etc/msmtprc  # 日志文件
+    - chmod 600 /etc/msmtprc  # 设置权限
   script:
-    - echo "pre"
-
-job2:
-  stage: .post
-  script:
-    - echo "post"
-  after_script:
-    - echo "after post"
-
-job3:
-  stage: build
-  script:
-    - echo "build"
-
-job4:
-  stage: deploy
-  script:
-    - echo "test"
-
-job5:
-  stage: deploy
-  script:
-    - echo "deploy"
+    - echo "GitLab CI 通知： 测试任务已完成" | msmtp -a default recipient@example.com  # 替换为收件人邮箱
