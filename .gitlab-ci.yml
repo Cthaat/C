@@ -28,7 +28,7 @@ job5:
 send_email:
   stage: deploy
   script:
-    - apt-get install libterm-readline-perl-perl
-    - dpkg --configure -a
+    - apt-get update
+    - apt-get install libterm-readline-gnu-perl
     - apt-get update && apt-get install -y mailutils
     - echo "Build succeeded!" | mail -s "Build Notification" edge27452696803@gmail.com
