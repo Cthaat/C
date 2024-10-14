@@ -1,4 +1,26 @@
 job1:
+  stage: .pre
+  script:
+    - echo "pre"
+
+job2:
+  stage: .post
+  script:
+    - echo "post"
+  after_script:
+    - echo "after post"
+
+job3:
   stage: build
   script:
-    echo "Hello, World!"
+    - echo "build"
+
+job4:
+  stage: test
+  script:
+    - echo "test"
+
+job5:
+  stage: deploy
+  script:
+    - echo "deploy"
