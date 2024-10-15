@@ -12,10 +12,10 @@ test_job:
     - exit 0  # 模拟测试失败（可删除）
 
 before_notify_job:
-  stage: notify
+  stage: before
   tags:
     - mail
-  before_script:
+  script:
     - apk add --no-cache msmtp  # 安装 msmtp
     - echo "account default" > /etc/msmtprc  # 创建 msmtp 配置文件
     - echo "host smtp.qq.com" >> /etc/msmtprc  # Gmail SMTP 服务器
@@ -34,7 +34,7 @@ notify_success:
   tags:
     - mail
   script:
-    - echo -e "Subject":"" CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default $GMAIL  # 替换为收件人邮箱
+    - echo -e "Subject CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default $GMAIL  # 替换为收件人邮箱
   when: on_success
 
 notify_failure:
@@ -42,5 +42,5 @@ notify_failure:
   tags:
     - mail
   script:
-    - echo -e "Subject':' CI/CD Pipeline Failure Notification\n\nThe pipeline has failed. Please check the logs." | msmtp -a default $GMAIL  # 替换为收件人邮箱
+    - echo -e "Subject CI/CD Pipeline Failure Notification\n\nThe pipeline has failed. Please check the logs." | msmtp -a default $GMAIL  # 替换为收件人邮箱
   when: on_failure
