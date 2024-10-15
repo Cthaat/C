@@ -29,14 +29,25 @@ notify_job:
     - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
     - chmod 600 /etc/msmtprc  # 设置权限
   script:
-    - apk add --no-cache curl  # 安装 curl
-    - curl -v telnet://mtp.qq.com:587  # 测试与 Gmail SMTP 的连接
-  after_script:
     - |
-      if [ "$CI_JOB_STATUS" != "success" ]; then
-        echo -e "Subject: CI/CD Job Failure Notification\n\nJob failed in stage: $CI_JOB_NAME" | msmtp -a default  $GMAIL # 替换为收件人邮箱
+      failed_jobs=()
+      if [ "$CI_PIPELINE_STATUS" != "success" ]; then
+        echo "Pipeline failed. Checking jobs for failures..."
+        # Check each job's status
+        for job in lint test deploy; do
+          job_status="${job}_status"
+          if [ "${!job_status}" != "success" ]; then
+            failed_jobs+=("$job")
+          fi
+        done
+        
+        # Prepare failure message
+        if [ ${#failed_jobs[@]} -gt 0 ]; then
+          failed_jobs_list=$(IFS=,; echo "${failed_jobs[*]}")
+          echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for details." | msmtp -a default  $GMAIL
+        fi
       else
-        echo -e "Subject: CI/CD Job Success Notification\n\nJob succeeded in stage: $CI_JOB_NAME" | msmtp -a default  $GMAIL # 替换为收件人邮箱
+        echo -e "Subject: CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default  $GMAIL
       fi
   when: always
     #- echo "GitLab CI 通知： 测试任务已完成" | msmtp -a default  $GMAIL # 替换为收件人邮箱
