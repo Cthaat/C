@@ -48,7 +48,7 @@ notify_failure:
     - echo "logfile /var/log/msmtp.log" >> /etc/msmtprc  # 日志文件
     - echo "tls on" >> /etc/msmtprc  # 启用 TLS
     - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
-    - chmod 600 /etc/msmtprc  # 设置权限
+    - chmod 600 /etc/msmtprc
   script:
     - echo -e "Subject CI/CD Pipeline Failure Notification\n\nThe pipeline has failed. Please check the logs." | msmtp -a default $GMAIL  # 替换为收件人邮箱
   when: on_failure
