@@ -34,25 +34,8 @@ notify_job:
       failed_jobs=""
       if [ "$CI_PIPELINE_STATUS" != "success" ]; then
         echo "Pipeline failed. Checking jobs for failures..."
-        
-        for job in $jobs; do
-          job_status="${job}_status"  # 获取作业状态的变量名
-          echo $job_status
-          eval job_status_value=\$$job_status  # 使用 eval 获取作业状态值
-          echo $job_status_value
-          
-          if [ "$job_status_value" != "success" ]; then
-            failed_jobs="$failed_jobs$job, "  # 添加到失败作业列表
-          fi
-        done
-
-        # Prepare failure message
-        if [ -n "$failed_jobs" ]; then
-          # Remove trailing comma and space
-          failed_jobs_list=${failed_jobs%,*}
-          echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for
-            details." | msmtp -a default  $GMAIL # 替换为收件人邮箱
-        fi
+        echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for
+          details." | msmtp -a default  $GMAIL # 替换为收件人邮箱
       else
         echo -e "Subject: CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default  $GMAIL # 替换为收件人邮箱
       fi
