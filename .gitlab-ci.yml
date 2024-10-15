@@ -44,7 +44,8 @@ notify_job:
         # Prepare failure message
         if [ ${#failed_jobs[@]} -gt 0 ]; then
           failed_jobs_list=$(IFS=,; echo "${failed_jobs[*]}")
-          echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for details." | msmtp -a default  $GMAIL
+          echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for
+            details." | msmtp -a default  $GMAIL
         fi
       else
         echo -e "Subject: CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default  $GMAIL
