@@ -30,6 +30,7 @@ notify_job:
     - chmod 600 /etc/msmtprc  # 设置权限
   script:
     - |
+      echo $CI_PIPELINE_STATUS
       if [ "$CI_PIPELINE_STATUS" != "success" ]; then
         echo "Pipeline failed. Checking jobs for failures..."
         echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for
