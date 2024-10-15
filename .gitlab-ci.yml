@@ -12,7 +12,7 @@ test_job:
     - exit 0  # 模拟测试失败（可删除）
 
 before_notify_job:
-  stage: before
+  stage: notify
   tags:
     - mail
   script:
