@@ -33,22 +33,29 @@ notify_job:
       failed_jobs=""
       if [ "$CI_PIPELINE_STATUS" != "success" ]; then
         echo "Pipeline failed. Checking jobs for failures..."
+        
         # Check each job's status
-        for job in lint test deploy; do
-          job_status="${job}_status"
-          if [ "${!job_status}" != "success" ]; then
-            failed_jobs+=("$job")
-          fi
-        done
+        if [ "$lint_status" != "success" ]; then
+          failed_jobs="${failed_jobs}lint, "
+        fi
+        
+        if [ "$test_status" != "success" ]; then
+          failed_jobs="${failed_jobs}test, "
+        fi
+        
+        if [ "$deploy_status" != "success" ]; then
+          failed_jobs="${failed_jobs}deploy, "
+        fi
         
         # Prepare failure message
-        if [ ${#failed_jobs[@]} -gt 0 ]; then
-          failed_jobs_list=$(IFS=,; echo "${failed_jobs[*]}")
+        if [ -n "$failed_jobs" ]; then
+          # Remove trailing comma and space
+          failed_jobs_list=${failed_jobs%,*}
           echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for
-            details." | msmtp -a default  $GMAIL
+            details." | msmtp -a default  $GMAIL # 替换为收件人邮箱
         fi
       else
-        echo -e "Subject: CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default  $GMAIL
+        echo -e "Subject: CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default  $GMAIL # 替换为收件人邮箱
       fi
   when: always
     #- echo "GitLab CI 通知： 测试任务已完成" | msmtp -a default  $GMAIL # 替换为收件人邮箱
