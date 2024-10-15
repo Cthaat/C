@@ -9,7 +9,7 @@ test_job:
   stage: build
   script:
     - echo "运行测试..."
-    - exit 1  # 模拟测试失败（可删除）
+    - exit 0  # 模拟测试失败（可删除）
 
 notify_job:
   stage: notify
@@ -28,7 +28,7 @@ notify_job:
     - echo "tls on" >> /etc/msmtprc  # 启用 TLS
     - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
     - chmod 600 /etc/msmtprc  # 设置权限
-  script:
+  after_script:
     - apk add --no-cache curl  # 安装 curl
     - curl -v telnet://mtp.qq.com:587  # 测试与 Gmail SMTP 的连接
     - |
