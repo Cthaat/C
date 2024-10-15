@@ -35,13 +35,12 @@ notify_job:
       if [ "$CI_PIPELINE_STATUS" != "success" ]; then
         echo "Pipeline failed. Checking jobs for failures..."
         
-        # 遍历作业数组
-        for job in "${jobs[@]}"; do
+        for job in $jobs; do
           job_status="${job}_status"  # 获取作业状态的变量名
+          eval job_status_value=\$$job_status  # 使用 eval 获取作业状态值
           
-          # 检查作业状态
-          if [ "${!job_status}" != "success" ]; then
-            failed_jobs="${failed_jobs}${job}, "  # 添加到失败作业列表
+          if [ "$job_status_value" != "success" ]; then
+            failed_jobs="$failed_jobs$job, "  # 添加到失败作业列表
           fi
         done
         
