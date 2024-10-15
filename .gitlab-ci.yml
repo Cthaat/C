@@ -10,12 +10,12 @@ test_job:
   script:
     - echo "运行测试..."
     - exit 0  # 模拟测试失败（可删除）
-
-before_notify_job:
+  
+notify_success:
   stage: notify
   tags:
     - mail
-  script:
+  before_script:
     - apk add --no-cache msmtp  # 安装 msmtp
     - echo "account default" > /etc/msmtprc  # 创建 msmtp 配置文件
     - echo "host smtp.qq.com" >> /etc/msmtprc  # Gmail SMTP 服务器
@@ -28,11 +28,6 @@ before_notify_job:
     - echo "tls on" >> /etc/msmtprc  # 启用 TLS
     - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
     - chmod 600 /etc/msmtprc  # 设置权限
-
-notify_success:
-  stage: notify
-  tags:
-    - mail
   script:
     - echo -e "Subject CI/CD Pipeline Success Notification\n\nThe pipeline has succeeded." | msmtp -a default $GMAIL  # 替换为收件人邮箱
   when: on_success
@@ -41,6 +36,19 @@ notify_failure:
   stage: notify
   tags:
     - mail
+  before_script:
+    - apk add --no-cache msmtp  # 安装 msmtp
+    - echo "account default" > /etc/msmtprc  # 创建 msmtp 配置文件
+    - echo "host smtp.qq.com" >> /etc/msmtprc  # Gmail SMTP 服务器
+    - echo "port 587" >> /etc/msmtprc  # 使用 TLS
+    - echo "auth on" >> /etc/msmtprc
+    - echo "user $QQ_MAIL" >> /etc/msmtprc  # 替换为您的 Gmail 地址
+    - echo "password $QQ_MAIL_PASSWORD" >> /etc/msmtprc  # 替换为您的应用密码
+    - echo "from $QQ_MAIL" >> /etc/msmtprc  # 替换为您的 Gmail 地址
+    - echo "logfile /var/log/msmtp.log" >> /etc/msmtprc  # 日志文件
+    - echo "tls on" >> /etc/msmtprc  # 启用 TLS
+    - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
+    - chmod 600 /etc/msmtprc  # 设置权限
   script:
     - echo -e "Subject CI/CD Pipeline Failure Notification\n\nThe pipeline has failed. Please check the logs." | msmtp -a default $GMAIL  # 替换为收件人邮箱
   when: on_failure
