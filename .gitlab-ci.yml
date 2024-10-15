@@ -9,7 +9,7 @@ test_job:
   stage: build
   script:
     - echo "运行测试..."
-    - exit 0  # 模拟测试失败（可删除）
+    - exit 1  # 模拟测试失败（可删除）
 
 notify_job:
   stage: notify
@@ -30,22 +30,20 @@ notify_job:
     - chmod 600 /etc/msmtprc  # 设置权限
   script:
     - |
+      jobs=("test_job")
       failed_jobs=""
       if [ "$CI_PIPELINE_STATUS" != "success" ]; then
         echo "Pipeline failed. Checking jobs for failures..."
         
-        # Check each job's status
-        if [ "$lint_status" != "success" ]; then
-          failed_jobs="${failed_jobs}lint, "
-        fi
-        
-        if [ "$test_status" != "success" ]; then
-          failed_jobs="${failed_jobs}test, "
-        fi
-        
-        if [ "$deploy_status" != "success" ]; then
-          failed_jobs="${failed_jobs}deploy, "
-        fi
+        # 遍历作业数组
+        for job in "${jobs[@]}"; do
+          job_status="${job}_status"  # 获取作业状态的变量名
+          
+          # 检查作业状态
+          if [ "${!job_status}" != "success" ]; then
+            failed_jobs="${failed_jobs}${job}, "  # 添加到失败作业列表
+          fi
+        done
         
         # Prepare failure message
         if [ -n "$failed_jobs" ]; then
