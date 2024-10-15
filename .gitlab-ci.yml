@@ -43,7 +43,7 @@ notify_job:
             failed_jobs="$failed_jobs$job, "  # 添加到失败作业列表
           fi
         done
-        
+        echo $fail_jobs
         # Prepare failure message
         if [ -n "$failed_jobs" ]; then
           # Remove trailing comma and space
