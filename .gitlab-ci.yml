@@ -39,6 +39,7 @@ notify_job:
           job_status="${job}_status"  # 获取作业状态的变量名
           echo $job_status
           eval job_status_value=\$$job_status  # 使用 eval 获取作业状态值
+          echo $job_status_value
           
           if [ "$job_status_value" != "success" ]; then
             failed_jobs="$failed_jobs$job, "  # 添加到失败作业列表
