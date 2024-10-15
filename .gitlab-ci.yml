@@ -1,3 +1,5 @@
+image:  alpine:latest   # 使用最新的 Alpine 镜像
+
 stages:
   - before
   - build
@@ -11,7 +13,6 @@ test_job:
 
 notify_job:
   stage: last
-  image: alpine:latest  # 使用最新的 Alpine 镜像
   before_script:
     - apk add --no-cache msmtp  # 安装 msmtp
     - echo "account default" > /etc/msmtprc  # 创建 msmtp 配置文件
@@ -32,7 +33,6 @@ notify_job:
 
 failure_job:
   stage: last
-  image: alpine:latest  # 使用最新的 Alpine 镜像
   before_script:
     - apk add --no-cache msmtp  # 安装 msmtp
     - echo "account default" > /etc/msmtprc  # 创建 msmtp 配置文件
