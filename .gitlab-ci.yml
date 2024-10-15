@@ -29,8 +29,9 @@ notify_job:
     - echo "tls_trust_file /etc/ssl/certs/ca-certificates.crt" >> /etc/msmtprc  # 指定 CA 证书
     - chmod 600 /etc/msmtprc  # 设置权限
   script:
+    - echo
+  after_script:
     - |
-      echo $CI_PIPELINE_STATUS
       if [ "$CI_PIPELINE_STATUS" != "success" ]; then
         echo "Pipeline failed. Checking jobs for failures..."
         echo -e "Subject: CI/CD Pipeline Failure Notification\n\nThe following jobs have failed: $failed_jobs_list. Please check the logs for
