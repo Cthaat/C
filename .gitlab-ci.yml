@@ -51,4 +51,4 @@ notify_failure:
     - chmod 600 /etc/msmtprc
   script:
     - echo -e "Subject CI/CD Pipeline Failure Notification\n\nThe pipeline has failed. Please check the logs." | msmtp -a default $GMAIL  # 替换为收件人邮箱
-  when: on_failure
+  when: on_failure 
