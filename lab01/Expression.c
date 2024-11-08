@@ -40,7 +40,6 @@ int pop(Stack *s) {
 int get_expression(char* expression) {
     Stack s = getStack();
     for (unsigned int i = 0; i < strlen(expression) - 1; i++) {
-        int n = strlen(expression);
         if (expression[i] == ' ') {
             continue;
         }
@@ -76,7 +75,7 @@ int get_expression(char* expression) {
     }
     int value = pop(&s);
     while (!isEmpty(&s)) {
-        char ch = pop(&s);
+        int ch = pop(&s);
         if (ch == '+') {
             value += pop(&s);
         } else {
