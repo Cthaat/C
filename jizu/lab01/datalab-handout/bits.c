@@ -229,7 +229,7 @@ int logicalOr(int x, int y) {
  *   Rating: 3 
  */
 int rotateLeft(int x, int n) {
-  return 2;
+  
 }
 /*
  * parityCheck - returns 1 if x contains an odd number of 1's
