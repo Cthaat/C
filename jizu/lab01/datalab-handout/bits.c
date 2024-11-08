@@ -171,7 +171,9 @@ NOTES:
  *   Rating: 1
  */
 int lsbZero(int x) {
-  return 2;
+  x >>= 1;
+  x <<= 1;
+  return x;
 }
 /* 
  * byteNot - bit-inversion to byte n from word x  
@@ -182,7 +184,8 @@ int lsbZero(int x) {
  *   Rating: 2
  */
 int byteNot(int x, int n) {
-  return 2;
+  x = x ^ (0xff << (n << 3));
+  return x;
 }
 /* 
  *   byteXor - compare the nth byte of x and y, if it is same, return 0, if not, return 1
@@ -190,12 +193,14 @@ int byteNot(int x, int n) {
  *   example: byteXor(0x12345678, 0x87654321, 1) = 1
 
  *			  byteXor(0x12345678, 0x87344321, 2) = 0
- *   Legal ops: ! ~ & ^ | + << >>
+ *   Legal o^ps: ! ~ & ^ | + << >>
  *   Max ops: 20
  *   Rating: 2 
  */
 int byteXor(int x, int y, int n) {
-  return 2;
+  x = x & (0xff << (n << 3));
+  y = y & (0xff << (n << 3));
+  return (x ^ y) != 0;
 }
 /* 
  *   logicalAnd - x && y
@@ -204,7 +209,7 @@ int byteXor(int x, int y, int n) {
  *   Rating: 3 
  */
 int logicalAnd(int x, int y) {
-  return 2;
+  return x && y;
 }
 /* 
  *   logicalOr - x || y
@@ -213,7 +218,7 @@ int logicalAnd(int x, int y) {
  *   Rating: 3 
  */
 int logicalOr(int x, int y) {
-  return 2;
+  return x || y;
 }
 /* 
  * rotateLeft - Rotate x to the left by n
@@ -225,7 +230,6 @@ int logicalOr(int x, int y) {
  */
 int rotateLeft(int x, int n) {
   return 2;
-  
 }
 /*
  * parityCheck - returns 1 if x contains an odd number of 1's
