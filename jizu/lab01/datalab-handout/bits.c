@@ -273,7 +273,12 @@ int mul2OK(int x) {
  *   Rating: 2
  */
 int mult3div2(int x) {
-	return 2;
+    int t = (x << 1) + x;
+    int LSB = t & 0x1;
+    int sign = (t >> 31) & 0x1;
+    int ans = (t >> 1);
+    ans += (LSB & sign);
+    return ans;
 }
 /* 
  * subOK - Determine if can compute x-y without overflow
@@ -284,7 +289,12 @@ int mult3div2(int x) {
  *   Rating: 3
  */
 int subOK(int x, int y) {
-  return 2;
+    int z;
+    z=x+(~y+1);
+    z=(z>>31)&0x1;
+    x=(x>>31)&0x1;
+    y=(y>>31)&0x1;
+    return ((x^y)&(x^z))^0x1;
 }
 /* 
  * absVal - absolute value of x
@@ -295,7 +305,9 @@ int subOK(int x, int y) {
  *   Rating: 4
  */
 int absVal(int x) {
-  return 2;
+    int y=x>>31;
+    x=(y&(~x+1))+((~y)&x);
+    return x;
 }
 /* 
  * float_abs - Return bit-level equivalent of absolute value of f for
@@ -309,7 +321,11 @@ int absVal(int x) {
  *   Rating: 2
  */
 unsigned float_abs(unsigned uf) {
-  return 2;
+    int x=uf&0x7fffffff;
+    if(x>0x7f800000)
+        return uf;//NaN
+    else
+        return x;
 }
 /* 
  * float_f2i - Return bit-level equivalent of expression (int) f
@@ -324,5 +340,26 @@ unsigned float_abs(unsigned uf) {
  *   Rating: 4
  */
 int float_f2i(unsigned uf) {
-  return 2;
+    int x,y;
+    unsigned mini=0x80000000;
+    x=(uf>>23)&0xff;//阶码域
+    y=(uf&0x007fffff)^0x00800000;
+    if(x>158)
+            return mini;
+    if(x<127)
+            return 0;
+    else if(((uf>>31)&0x1)==1)
+    {
+        if(x>150)
+            return ((~(y<<(x-150)))+1);
+        else
+            return ((~(y>>(150-x)))+1);
+    }
+    else
+    {
+        if(x>150)
+            return (y<<(x-150));
+        else
+            return (y>>(150-x));
+    }
 }
