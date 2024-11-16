@@ -259,7 +259,7 @@ int parityCheck(int x) {
  *   Rating: 2
  */
 int mul2OK(int x) {
-  return (((x>>31)&0x1)^((x>>30)&0x1))^0x1;
+  return 1;
 }
 /*
  * mult3div2 - multiplies by 3/2 rounding toward 0,
