@@ -218,7 +218,7 @@ int logicalAnd(int x, int y) {
  *   Rating: 3 
  */
 int logicalOr(int x, int y) {
-  return x || y;
+  return (!!x)|(!!y);
 }
 /* 
  * rotateLeft - Rotate x to the left by n
@@ -229,7 +229,9 @@ int logicalOr(int x, int y) {
  *   Rating: 3 
  */
 int rotateLeft(int x, int n) {
-  
+  int y = ~((~0)<<n);
+  x = (x << n) + ((x >> (32 + (~n + 1)))&y);
+  return x;
 }
 /*
  * parityCheck - returns 1 if x contains an odd number of 1's
@@ -239,7 +241,13 @@ int rotateLeft(int x, int n) {
  *   Rating: 4
  */
 int parityCheck(int x) {
-  return 2;
+    x = x^(x<<16);
+  x = x^(x<<8);
+  x = x^(x<<4);
+  x = x^(x<<2);
+  x = x^(x<<1);
+  x >>= 31;
+  return !!x;
 }
 /*
  * mul2OK - Determine if can compute 2*x without overflow
@@ -251,7 +259,7 @@ int parityCheck(int x) {
  *   Rating: 2
  */
 int mul2OK(int x) {
-  return 2;
+  return (((x>>31)&0x1)^((x>>30)&0x1))^0x1;
 }
 /*
  * mult3div2 - multiplies by 3/2 rounding toward 0,
