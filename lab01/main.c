@@ -16,6 +16,7 @@ void PloyQuestion () {
 }
 
 void ExpressionQuestion () {
+    while (getchar() != '\n');
     char expression[MAX_LEN];
     printf("Enter expression: ");
     fgets(expression, MAX_LEN, stdin);
@@ -36,27 +37,27 @@ void DancerQuestion (){
 int main () {
     printf ("Welcome to lab01\n");
     int question = 1;
-    printf ("Choose a question:\n1. Ploy\n2. Expression\n3. Dancer\n 0. Exit\n");
+    a:
+    printf ("Choose a question:\n1. Ploy\n2. Expression\n3. Dancer\n0. Exit\n");
     scanf ("%d", &question);
-    while (true) {
-        switch (question) {
-            case 0:
-                printf ("Exiting...\n");
-                return 0;
-            case 1:
-                PloyQuestion();
-                break;
-            case 2:
-                ExpressionQuestion();
-                break;
-            case 3:
-                DancerQuestion();
-                break;
-            default:
-                printf ("Invalid question number\n");
-                break;
-        }
+    switch (question) {
+        case 0:
+            printf ("Exiting...\n");
+            return 0;
+        case 1:
+            PloyQuestion();
+            break;
+        case 2:
+            ExpressionQuestion();
+            break;
+        case 3:
+            DancerQuestion();
+            break;
+        default:
+            printf ("Invalid question number\n");
+            break;
     }
+    goto a;
     // PloyQuestion();
     // DancerQuestion();
     // ExpressionQuestion();
