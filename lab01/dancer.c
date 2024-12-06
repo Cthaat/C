@@ -1,20 +1,57 @@
 #include <stdio.h>
 
-#define MAX_DANCERS 100
+#define MAX_DANCER 100
 
 typedef struct {
-    int first;
-    int last;
-    char name[MAX_DANCERS];
-} Queue;
+    // 姓名
+    chat name[20];
+    // 性别 F 女 M 男
+    char sex;
+} Dancer;
 
-void initQueue(Queue *q) {
-    q->first = 0;
-    q->last = 0;
+typedef struct {
+    Dancer *base;
+    int front;
+    int rare;
+} DancerQueue;
+
+DancerQueue MaleQueue, FemaleQueue;
+
+void InitDancerQueue (DancerQueue *queue) {
+    queue->base = (Dancer *) malloc (MAX_DANCER * sizeof (Dancer));
+    queue->front = 0;
+    queue->rare = 0;
 }
 
-Queue getQueue() {
-    Queue q;
-    initQueue(&q);
-    return q;
+void AddDancer (DancerQueue *queue, Dancer dancer) {
+    if (queue->front == MAX_DANCER) {
+        printf ("队列已满！\n");
+        return;
+    }
+    queue->base[queue->front] = dancer;
+    queue->front++;
 }
+
+Dancer RemoveDancer (DancerQueue *queue) {
+    if (queue->front == 0) {
+        printf ("队列为空！\n");
+        return;
+    }
+    Dancer dancer = queue->base[queue->front - 1];
+    queue->front--;
+    return dancer;
+}
+
+void DancerParnter (Dancer dancer[] , int num) {
+    InitDancerQueue (&MaleQueue);
+    InitDancerQueue (&FemaleQueue);
+    for (int i = 0; i < num; i++) {
+        if (dancer[i].sex == 'M') {
+            AddDancer (&MaleQueue, dancer[i]);
+        }
+        else if (dancer[i].sex == 'F') {
+            AddDancer (&FemaleQueue, dancer[i]);
+        }
+    }
+}
+
