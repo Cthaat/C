@@ -84,12 +84,3 @@ int get_expression(char* expression) {
     }
     return value;
 }
-
-int main() {
-    char expression[MAX_LEN];
-    printf("Enter expression: ");
-    fgets(expression, MAX_LEN, stdin);
-    int result = get_expression(expression);
-    printf("Result: %d\n", result);
-    return 0;
-}
