@@ -746,7 +746,7 @@ Disassembly of section .text:
  8048edc:	8d 74 26 00          	lea    0x0(%esi,%eiz,1),%esi
 
  8048ee0:	31 c0                	xor    %eax,%eax // return 0
-
+ 
  8048ee2:	89 ec                	mov    %ebp,%esp
  8048ee4:	5d                   	pop    %ebp
  8048ee5:	c3                   	ret
@@ -775,8 +775,8 @@ Disassembly of section .text:
  8048f0f:	e8 e8 05 00 00       	call   80494fc <explode_bomb>
 
  8048f14:	83 c4 f8             	add    $0xfffffff8,%esp
- 8048f17:	53                   	push   %ebx // input number
- 8048f18:	68 20 b3 04 08       	push   $0x804b320 // node.data
+ 8048f17:	53                   	push   %ebx
+ 8048f18:	68 20 b3 04 08       	push   $0x804b320
  8048f1d:	e8 72 ff ff ff       	call   8048e94 <fun7>
 
  8048f22:	83 c4 10             	add    $0x10,%esp

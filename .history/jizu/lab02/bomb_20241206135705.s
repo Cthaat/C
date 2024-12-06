@@ -775,7 +775,7 @@ Disassembly of section .text:
  8048f0f:	e8 e8 05 00 00       	call   80494fc <explode_bomb>
 
  8048f14:	83 c4 f8             	add    $0xfffffff8,%esp
- 8048f17:	53                   	push   %ebx // input number
+ 8048f17:	53                   	push   %ebx
  8048f18:	68 20 b3 04 08       	push   $0x804b320 // node.data
  8048f1d:	e8 72 ff ff ff       	call   8048e94 <fun7>
 

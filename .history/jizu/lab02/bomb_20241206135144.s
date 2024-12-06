@@ -721,32 +721,26 @@ Disassembly of section .text:
  8048eb0:	3b 02                	cmp    (%edx),%eax
  8048eb2:	7d 11                	jge    8048ec5 <fun7+0x31> // if node.data <= n
 
-// n < m
  8048eb4:	83 c4 f8             	add    $0xfffffff8,%esp
  8048eb7:	50                   	push   %eax
- 8048eb8:	8b 42 04             	mov    0x4(%edx),%eax // left child
+ 8048eb8:	8b 42 04             	mov    0x4(%edx),%eax
  8048ebb:	50                   	push   %eax
- 8048ebc:	e8 d3 ff ff ff       	call   8048e94 <fun7> // recursive call to left child
- 8048ec1:	01 c0                	add    %eax,%eax // return 2 * %eax
+ 8048ebc:	e8 d3 ff ff ff       	call   8048e94 <fun7>
+ 8048ec1:	01 c0                	add    %eax,%eax
  8048ec3:	eb 1d                	jmp    8048ee2 <fun7+0x4e>
-
- 8048ec5:	3b 02                	cmp    (%edx),%eax // n = m
- 8048ec7:	74 17                	je     8048ee0 <fun7+0x4c> // return 0
-
- // n > m
- 8048ec9:	83 c4 f8             	add    $0xfffffff8,%esp 
+ 8048ec5:	3b 02                	cmp    (%edx),%eax
+ 8048ec7:	74 17                	je     8048ee0 <fun7+0x4c>
+ 8048ec9:	83 c4 f8             	add    $0xfffffff8,%esp
  8048ecc:	50                   	push   %eax
- 8048ecd:	8b 42 08             	mov    0x8(%edx),%eax // right child
+ 8048ecd:	8b 42 08             	mov    0x8(%edx),%eax
  8048ed0:	50                   	push   %eax
- 8048ed1:	e8 be ff ff ff       	call   8048e94 <fun7> // recursive call to right child
+ 8048ed1:	e8 be ff ff ff       	call   8048e94 <fun7>
  8048ed6:	01 c0                	add    %eax,%eax
- 8048ed8:	40                   	inc    %eax // return 2 * %eax + 1
+ 8048ed8:	40                   	inc    %eax
  8048ed9:	eb 07                	jmp    8048ee2 <fun7+0x4e>
  8048edb:	90                   	nop
  8048edc:	8d 74 26 00          	lea    0x0(%esi,%eiz,1),%esi
-
- 8048ee0:	31 c0                	xor    %eax,%eax // return 0
-
+ 8048ee0:	31 c0                	xor    %eax,%eax
  8048ee2:	89 ec                	mov    %ebp,%esp
  8048ee4:	5d                   	pop    %ebp
  8048ee5:	c3                   	ret
@@ -775,8 +769,8 @@ Disassembly of section .text:
  8048f0f:	e8 e8 05 00 00       	call   80494fc <explode_bomb>
 
  8048f14:	83 c4 f8             	add    $0xfffffff8,%esp
- 8048f17:	53                   	push   %ebx // input number
- 8048f18:	68 20 b3 04 08       	push   $0x804b320 // node.data
+ 8048f17:	53                   	push   %ebx
+ 8048f18:	68 20 b3 04 08       	push   $0x804b320
  8048f1d:	e8 72 ff ff ff       	call   8048e94 <fun7>
 
  8048f22:	83 c4 10             	add    $0x10,%esp
