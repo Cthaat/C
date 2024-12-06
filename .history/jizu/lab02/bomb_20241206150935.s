@@ -618,21 +618,18 @@ Disassembly of section .text:
 
  8048d57:	8a 04 1a             	mov    (%edx,%ebx,1),%al // %al = *(n+i)
 
- 8048d5a:	24 0f                	and    $0xf,%al // %al = %al & 0xf
-
- 8048d5c:	0f be c0             	movsbl %al,%eax //数组首地址为0x804b220，大小为16
+ 8048d5a:	24 0f                	and    $0xf,%al
+ 8048d5c:	0f be c0             	movsbl %al,%eax
  8048d5f:	8a 04 30             	mov    (%eax,%esi,1),%al
  8048d62:	88 04 0a             	mov    %al,(%edx,%ecx,1)
- 8048d65:	42                   	inc    %edx // %edx = %edx + 1
- 8048d66:	83 fa 05             	cmp    $0x5,%edx // 循环六次
+ 8048d65:	42                   	inc    %edx
+ 8048d66:	83 fa 05             	cmp    $0x5,%edx
  8048d69:	7e ec                	jle    8048d57 <phase_5+0x2b>
-
  8048d6b:	c6 45 fe 00          	movb   $0x0,-0x2(%ebp)
  8048d6f:	83 c4 f8             	add    $0xfffffff8,%esp
- 8048d72:	68 0b 98 04 08       	push   $0x804980b // 字符串
- 8048d77:	8d 45 f8             	lea    -0x8(%ebp),%eax // 新串
+ 8048d72:	68 0b 98 04 08       	push   $0x804980b
+ 8048d77:	8d 45 f8             	lea    -0x8(%ebp),%eax
  8048d7a:	50                   	push   %eax
-
  8048d7b:	e8 b0 02 00 00       	call   8049030 <strings_not_equal>
  8048d80:	83 c4 10             	add    $0x10,%esp
  8048d83:	85 c0                	test   %eax,%eax
@@ -660,11 +657,9 @@ Disassembly of section .text:
  8048db1:	50                   	push   %eax
  8048db2:	52                   	push   %edx
  8048db3:	e8 20 02 00 00       	call   8048fd8 <read_six_numbers>
-
  8048db8:	31 ff                	xor    %edi,%edi
  8048dba:	83 c4 10             	add    $0x10,%esp
  8048dbd:	8d 76 00             	lea    0x0(%esi),%esi
- 
  8048dc0:	8d 45 e8             	lea    -0x18(%ebp),%eax
  8048dc3:	8b 04 b8             	mov    (%eax,%edi,4),%eax
  8048dc6:	48                   	dec    %eax

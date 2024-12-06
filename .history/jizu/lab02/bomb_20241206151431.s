@@ -660,11 +660,10 @@ Disassembly of section .text:
  8048db1:	50                   	push   %eax
  8048db2:	52                   	push   %edx
  8048db3:	e8 20 02 00 00       	call   8048fd8 <read_six_numbers>
-
+ 
  8048db8:	31 ff                	xor    %edi,%edi
  8048dba:	83 c4 10             	add    $0x10,%esp
  8048dbd:	8d 76 00             	lea    0x0(%esi),%esi
- 
  8048dc0:	8d 45 e8             	lea    -0x18(%ebp),%eax
  8048dc3:	8b 04 b8             	mov    (%eax,%edi,4),%eax
  8048dc6:	48                   	dec    %eax

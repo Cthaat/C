@@ -628,9 +628,9 @@ Disassembly of section .text:
  8048d69:	7e ec                	jle    8048d57 <phase_5+0x2b>
 
  8048d6b:	c6 45 fe 00          	movb   $0x0,-0x2(%ebp)
- 8048d6f:	83 c4 f8             	add    $0xfffffff8,%esp
- 8048d72:	68 0b 98 04 08       	push   $0x804980b // 字符串
- 8048d77:	8d 45 f8             	lea    -0x8(%ebp),%eax // 新串
+ 8048d6f:	83 c4 f8             	add    $0xfffffff8,%esp // 新chuan
+ 8048d72:	68 0b 98 04 08       	push   $0x804980b
+ 8048d77:	8d 45 f8             	lea    -0x8(%ebp),%eax
  8048d7a:	50                   	push   %eax
 
  8048d7b:	e8 b0 02 00 00       	call   8049030 <strings_not_equal>
@@ -660,11 +660,9 @@ Disassembly of section .text:
  8048db1:	50                   	push   %eax
  8048db2:	52                   	push   %edx
  8048db3:	e8 20 02 00 00       	call   8048fd8 <read_six_numbers>
-
  8048db8:	31 ff                	xor    %edi,%edi
  8048dba:	83 c4 10             	add    $0x10,%esp
  8048dbd:	8d 76 00             	lea    0x0(%esi),%esi
- 
  8048dc0:	8d 45 e8             	lea    -0x18(%ebp),%eax
  8048dc3:	8b 04 b8             	mov    (%eax,%edi,4),%eax
  8048dc6:	48                   	dec    %eax

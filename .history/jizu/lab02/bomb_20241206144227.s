@@ -449,30 +449,24 @@ Disassembly of section .text:
  8048bac:	50                   	push   %eax
  8048bad:	8d 45 f4             	lea    -0xc(%ebp),%eax
  8048bb0:	50                   	push   %eax
- 8048bb1:	68 de 97 04 08       	push   $0x80497de //"%d, %c, %d"
+ 8048bb1:	68 de 97 04 08       	push   $0x80497de
  8048bb6:	52                   	push   %edx
-
- 8048bb7:	e8 a4 fc ff ff       	call   8048860 <sscanf@plt> // %edx, "%d, %c, %d", &n1, &c, &n2
-
+ 
+ 8048bb7:	e8 a4 fc ff ff       	call   8048860 <sscanf@plt>
  8048bbc:	83 c4 20             	add    $0x20,%esp
- 8048bbf:	83 f8 02             	cmp    $0x2,%eax // check if scanf read 2 numbers
+ 8048bbf:	83 f8 02             	cmp    $0x2,%eax
  8048bc2:	7f 05                	jg     8048bc9 <phase_3+0x31>
  8048bc4:	e8 33 09 00 00       	call   80494fc <explode_bomb>
-
- 8048bc9:	83 7d f4 07          	cmpl   $0x7,-0xc(%ebp) // check if n1 > 7
+ 8048bc9:	83 7d f4 07          	cmpl   $0x7,-0xc(%ebp)
  8048bcd:	0f 87 b5 00 00 00    	ja     8048c88 <phase_3+0xf0>
  8048bd3:	8b 45 f4             	mov    -0xc(%ebp),%eax
-
- 8048bd6:	ff 24 85 e8 97 04 08 	jmp    *0x80497e8(,%eax,4) // jump to the corresponding function
-
- 8048bdd:	8d 76 00             	lea    0x0(%esi),%esi // n1 = 0
+ 8048bd6:	ff 24 85 e8 97 04 08 	jmp    *0x80497e8(,%eax,4)
+ 8048bdd:	8d 76 00             	lea    0x0(%esi),%esi
  8048be0:	b3 71                	mov    $0x71,%bl
-
- 8048be2:	81 7d fc 09 03 00 00 	cmpl   $0x309,-0x4(%ebp) // check if n2 is 0x309
+ 8048be2:	81 7d fc 09 03 00 00 	cmpl   $0x309,-0x4(%ebp)
  8048be9:	0f 84 a0 00 00 00    	je     8048c8f <phase_3+0xf7>
  8048bef:	e8 08 09 00 00       	call   80494fc <explode_bomb>
  8048bf4:	e9 96 00 00 00       	jmp    8048c8f <phase_3+0xf7>
-
  8048bf9:	8d b4 26 00 00 00 00 	lea    0x0(%esi,%eiz,1),%esi
  8048c00:	b3 62                	mov    $0x62,%bl
  8048c02:	81 7d fc d6 00 00 00 	cmpl   $0xd6,-0x4(%ebp)
@@ -512,8 +506,7 @@ Disassembly of section .text:
  8048c86:	eb 07                	jmp    8048c8f <phase_3+0xf7>
  8048c88:	b3 78                	mov    $0x78,%bl
  8048c8a:	e8 6d 08 00 00       	call   80494fc <explode_bomb>
-
- 8048c8f:	3a 5d fb             	cmp    -0x5(%ebp),%bl // c = %bl
+ 8048c8f:	3a 5d fb             	cmp    -0x5(%ebp),%bl
  8048c92:	74 05                	je     8048c99 <phase_3+0x101>
  8048c94:	e8 63 08 00 00       	call   80494fc <explode_bomb>
  8048c99:	8b 5d e8             	mov    -0x18(%ebp),%ebx
@@ -527,28 +520,22 @@ Disassembly of section .text:
  8048ca3:	83 ec 10             	sub    $0x10,%esp
  8048ca6:	56                   	push   %esi
  8048ca7:	53                   	push   %ebx
-
- 8048ca8:	8b 5d 08             	mov    0x8(%ebp),%ebx // %ebp = n
-
- 8048cab:	83 fb 01             	cmp    $0x1,%ebx // check if n <= 1
+ 8048ca8:	8b 5d 08             	mov    0x8(%ebp),%ebx
+ 8048cab:	83 fb 01             	cmp    $0x1,%ebx
  8048cae:	7e 20                	jle    8048cd0 <func4+0x30>
-
  8048cb0:	83 c4 f4             	add    $0xfffffff4,%esp
- 8048cb3:	8d 43 ff             	lea    -0x1(%ebx),%eax // %eax = n-1
+ 8048cb3:	8d 43 ff             	lea    -0x1(%ebx),%eax
  8048cb6:	50                   	push   %eax
- 8048cb7:	e8 e4 ff ff ff       	call   8048ca0 <func4> // recursive call fun4(n-1)
- 8048cbc:	89 c6                	mov    %eax,%esi // %esi = result of recursive call
-
+ 8048cb7:	e8 e4 ff ff ff       	call   8048ca0 <func4>
+ 8048cbc:	89 c6                	mov    %eax,%esi
  8048cbe:	83 c4 f4             	add    $0xfffffff4,%esp
  8048cc1:	8d 43 fe             	lea    -0x2(%ebx),%eax
  8048cc4:	50                   	push   %eax
- 8048cc5:	e8 d6 ff ff ff       	call   8048ca0 <func4> // recursive call fun4(n-2)
-
- 8048cca:	01 f0                	add    %esi,%eax // func4(n = 1) + func4(n - 2)
+ 8048cc5:	e8 d6 ff ff ff       	call   8048ca0 <func4>
+ 8048cca:	01 f0                	add    %esi,%eax
  8048ccc:	eb 07                	jmp    8048cd5 <func4+0x35>
  8048cce:	89 f6                	mov    %esi,%esi
-
- 8048cd0:	b8 01 00 00 00       	mov    $0x1,%eax // return 1 if n <= 1
+ 8048cd0:	b8 01 00 00 00       	mov    $0x1,%eax
  8048cd5:	8d 65 e8             	lea    -0x18(%ebp),%esp
  8048cd8:	5b                   	pop    %ebx
  8048cd9:	5e                   	pop    %esi
@@ -561,34 +548,26 @@ Disassembly of section .text:
  8048ce0:	55                   	push   %ebp
  8048ce1:	89 e5                	mov    %esp,%ebp
  8048ce3:	83 ec 18             	sub    $0x18,%esp
- 8048ce6:	8b 55 08             	mov    0x8(%ebp),%edx // edx
-
+ 8048ce6:	8b 55 08             	mov    0x8(%ebp),%edx
  8048ce9:	83 c4 fc             	add    $0xfffffffc,%esp
- 8048cec:	8d 45 fc             	lea    -0x4(%ebp),%eax // n
+ 8048cec:	8d 45 fc             	lea    -0x4(%ebp),%eax
  8048cef:	50                   	push   %eax
  8048cf0:	68 08 98 04 08       	push   $0x8049808
  8048cf5:	52                   	push   %edx
- 
- 8048cf6:	e8 65 fb ff ff       	call   8048860 <sscanf@plt> // scanf("%d", &n)
-
+ 8048cf6:	e8 65 fb ff ff       	call   8048860 <sscanf@plt>
  8048cfb:	83 c4 10             	add    $0x10,%esp
- 8048cfe:	83 f8 01             	cmp    $0x1,%eax // return 1
+ 8048cfe:	83 f8 01             	cmp    $0x1,%eax
  8048d01:	75 06                	jne    8048d09 <phase_4+0x29>
  8048d03:	83 7d fc 00          	cmpl   $0x0,-0x4(%ebp)
  8048d07:	7f 05                	jg     8048d0e <phase_4+0x2e>
  8048d09:	e8 ee 07 00 00       	call   80494fc <explode_bomb>
-
  8048d0e:	83 c4 f4             	add    $0xfffffff4,%esp
  8048d11:	8b 45 fc             	mov    -0x4(%ebp),%eax
-
  8048d14:	50                   	push   %eax
- 8048d15:	e8 86 ff ff ff       	call   8048ca0 <func4> //  func4(n)
-
+ 8048d15:	e8 86 ff ff ff       	call   8048ca0 <func4>
  8048d1a:	83 c4 10             	add    $0x10,%esp
- 8048d1d:	83 f8 37             	cmp    $0x37,%eax // func4(n) return 55
-
+ 8048d1d:	83 f8 37             	cmp    $0x37,%eax
  8048d20:	74 05                	je     8048d27 <phase_4+0x47>
-
  8048d22:	e8 d5 07 00 00       	call   80494fc <explode_bomb>
  8048d27:	89 ec                	mov    %ebp,%esp
  8048d29:	5d                   	pop    %ebp
@@ -596,43 +575,35 @@ Disassembly of section .text:
  8048d2b:	90                   	nop
 
 08048d2c <phase_5>:
- 8048d2c:	55                   	push   %ebp // save ebp
+ 8048d2c:	55                   	push   %ebp
  8048d2d:	89 e5                	mov    %esp,%ebp
  8048d2f:	83 ec 10             	sub    $0x10,%esp
  8048d32:	56                   	push   %esi
  8048d33:	53                   	push   %ebx
-
- 8048d34:	8b 5d 08             	mov    0x8(%ebp),%ebx // %ebp = n
+ 8048d34:	8b 5d 08             	mov    0x8(%ebp),%ebx
  8048d37:	83 c4 f4             	add    $0xfffffff4,%esp
  8048d3a:	53                   	push   %ebx
  8048d3b:	e8 d8 02 00 00       	call   8049018 <string_length>
  8048d40:	83 c4 10             	add    $0x10,%esp
- 8048d43:	83 f8 06             	cmp    $0x6,%eax // check if n <= 6
+ 8048d43:	83 f8 06             	cmp    $0x6,%eax
  8048d46:	74 05                	je     8048d4d <phase_5+0x21>
  8048d48:	e8 af 07 00 00       	call   80494fc <explode_bomb>
-
- 8048d4d:	31 d2                	xor    %edx,%edx // %edx = 0
-
- 8048d4f:	8d 4d f8             	lea    -0x8(%ebp),%ecx // %ecx = 0
- 8048d52:	be 20 b2 04 08       	mov    $0x804b220,%esi // %esi = $0x804b220
-
- 8048d57:	8a 04 1a             	mov    (%edx,%ebx,1),%al // %al = *(n+i)
-
- 8048d5a:	24 0f                	and    $0xf,%al // %al = %al & 0xf
-
- 8048d5c:	0f be c0             	movsbl %al,%eax //数组首地址为0x804b220，大小为16
+ 8048d4d:	31 d2                	xor    %edx,%edx
+ 8048d4f:	8d 4d f8             	lea    -0x8(%ebp),%ecx
+ 8048d52:	be 20 b2 04 08       	mov    $0x804b220,%esi
+ 8048d57:	8a 04 1a             	mov    (%edx,%ebx,1),%al
+ 8048d5a:	24 0f                	and    $0xf,%al
+ 8048d5c:	0f be c0             	movsbl %al,%eax
  8048d5f:	8a 04 30             	mov    (%eax,%esi,1),%al
  8048d62:	88 04 0a             	mov    %al,(%edx,%ecx,1)
- 8048d65:	42                   	inc    %edx // %edx = %edx + 1
- 8048d66:	83 fa 05             	cmp    $0x5,%edx // 循环六次
+ 8048d65:	42                   	inc    %edx
+ 8048d66:	83 fa 05             	cmp    $0x5,%edx
  8048d69:	7e ec                	jle    8048d57 <phase_5+0x2b>
-
  8048d6b:	c6 45 fe 00          	movb   $0x0,-0x2(%ebp)
  8048d6f:	83 c4 f8             	add    $0xfffffff8,%esp
- 8048d72:	68 0b 98 04 08       	push   $0x804980b // 字符串
- 8048d77:	8d 45 f8             	lea    -0x8(%ebp),%eax // 新串
+ 8048d72:	68 0b 98 04 08       	push   $0x804980b
+ 8048d77:	8d 45 f8             	lea    -0x8(%ebp),%eax
  8048d7a:	50                   	push   %eax
-
  8048d7b:	e8 b0 02 00 00       	call   8049030 <strings_not_equal>
  8048d80:	83 c4 10             	add    $0x10,%esp
  8048d83:	85 c0                	test   %eax,%eax
@@ -660,11 +631,9 @@ Disassembly of section .text:
  8048db1:	50                   	push   %eax
  8048db2:	52                   	push   %edx
  8048db3:	e8 20 02 00 00       	call   8048fd8 <read_six_numbers>
-
  8048db8:	31 ff                	xor    %edi,%edi
  8048dba:	83 c4 10             	add    $0x10,%esp
  8048dbd:	8d 76 00             	lea    0x0(%esi),%esi
- 
  8048dc0:	8d 45 e8             	lea    -0x18(%ebp),%eax
  8048dc3:	8b 04 b8             	mov    (%eax,%edi,4),%eax
  8048dc6:	48                   	dec    %eax
