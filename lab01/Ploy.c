@@ -60,18 +60,3 @@ Node* addPloy (Node *poly1, Node *poly2) {
     }
     return result;
 }
-
-
-int main() {
-    Node *poly1 = NULL;
-    Node *poly2 = NULL;
-    addNode(&poly1, create(1, 2));
-    addNode(&poly1, create(2, 1));
-    addNode(&poly1, create(3, 0));
-    addNode(&poly2, create(2, 2));
-    addNode(&poly2, create(3, 1));
-    addNode(&poly2, create(4, 0));
-    Node *result = addPloy(poly1, poly2);
-    print(result);
-    return 0;
-}

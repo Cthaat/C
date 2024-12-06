@@ -73,13 +73,3 @@ void DancerPartner (DancerQueue *MaleQueue, DancerQueue *FemaleQueue) {
     }
     printf ("匹配结束！\n");
 }
-
-int main () {
-    Dancer A[] = {{"A", 'M'}, {"B", 'M'}, {"C", 'M'}, {"D", 'M'}, {"E", 'M'}, {"F", 'M'}, {"G", 'M'}, {"H", 'M'}, {"I", 'M'}, {"J", 'M'}, {"K", 'F'}, {"L", 'F'}, {"M", 'F'}, {"N", 'F'}, {"O", 'F'}, {"P", 'F'}, {"Q", 'F'}, {"R", 'F'}, {"S", 'F'}, {"T", 'F'}, {"U", 'F'}, {"V", 'F'}, {"W", 'F'}, {"X", 'F'}, {"Y", 'F'}, {"Z", 'F'}};
-    DancerQueue AQueue;
-    AQueue.base = A;
-    AQueue.front = sizeof (A) / sizeof (Dancer);
-    AQueue.rare = 0;
-    DancerQueueSort (&AQueue);
-    DancerPartner (&MaleQueue, &FemaleQueue);
-}
