@@ -58,7 +58,4 @@ int main () {
             break;
     }
     goto a;
-    // PloyQuestion();
-    // DancerQuestion();
-    // ExpressionQuestion();
 }
