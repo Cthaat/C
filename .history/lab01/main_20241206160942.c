@@ -16,7 +16,12 @@ void PloyQuestion () {
 }
 
 void ExpressionQuestion () {
-    
+    while (getchar() != '\n');
+    char expression[MAX_LEN];
+    printf("Enter expression: ");
+    fgets(expression, MAX_LEN, stdin);
+    int result = get_expression(expression);
+    printf("Result: %d\n", result);
 }
 
 void DancerQuestion (){
