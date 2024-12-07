@@ -3,7 +3,6 @@
 
 #define MAX_DANCER 100
 
-// 定义舞者结构体
 typedef struct {
     // 姓名
     char name[20];
@@ -11,24 +10,20 @@ typedef struct {
     char sex;
 } Dancer;
 
-// 定义舞者队列结构体
 typedef struct {
     Dancer *base;
     int front;
     int rare;
 } DancerQueue;
 
-// 定义两个舞者队列
 DancerQueue MaleQueue, FemaleQueue;
 
-// 初始化舞者队列
 void InitDancerQueue (DancerQueue *queue) {
     queue->base = (Dancer *) malloc (MAX_DANCER * sizeof (Dancer));
     queue->front = 0;
     queue->rare = 0;
 }
 
-// 添加舞者到队列
 void AddDancer (DancerQueue *queue, Dancer dancer) {
     if (queue->front == MAX_DANCER) {
         printf ("队列已满！\n");
@@ -38,7 +33,6 @@ void AddDancer (DancerQueue *queue, Dancer dancer) {
     queue->front++;
 }
 
-// 从队列中移除舞者
 Dancer RemoveDancer (DancerQueue *queue) {
     if (queue->front == 0) {
         printf ("队列为空！\n");
@@ -49,7 +43,6 @@ Dancer RemoveDancer (DancerQueue *queue) {
     return dancer;
 }
 
-// 对舞者队列进行排序
 void DancerQueueSort (DancerQueue *queue) {
     InitDancerQueue (&MaleQueue);
     InitDancerQueue (&FemaleQueue);
@@ -63,7 +56,6 @@ void DancerQueueSort (DancerQueue *queue) {
     }
 }
 
-// 匹配舞者
 void DancerPartner (DancerQueue *MaleQueue, DancerQueue *FemaleQueue) {
     printf ("开始匹配...\n");
     while (MaleQueue->front > 0 && FemaleQueue->front > 0) {

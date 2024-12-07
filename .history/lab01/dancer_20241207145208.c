@@ -63,7 +63,6 @@ void DancerQueueSort (DancerQueue *queue) {
     }
 }
 
-// 匹配舞者
 void DancerPartner (DancerQueue *MaleQueue, DancerQueue *FemaleQueue) {
     printf ("开始匹配...\n");
     while (MaleQueue->front > 0 && FemaleQueue->front > 0) {
