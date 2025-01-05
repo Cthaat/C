@@ -18,7 +18,6 @@ node* createNode(int data)
     // 初始化节点数据
     newNode->data = data;
     newNode->next = NULL;
-    // 返回新创建的节点
     return newNode;
 }
 
@@ -30,8 +29,7 @@ node* insert(node *head, int data)
     // 如果链表为空，则直接插入新节点
     if (head == NULL)
     {
-        // 如果链表为空，直接插入新节点
-        head->next = newNode;
+        head->next = newNode; // 如果链表为空，直接插入新节点
     }
     // 如果链表不为空，则遍历链表，找到插入位置
     else

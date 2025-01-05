@@ -2,32 +2,32 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
- 
+
 #define MAX_STUDENTS 100
 #define MAX_NAME_LEN 50
 #define TABLE_SIZE 7 // 散列表大小（质数）
- 
+
 // 学生结构体，包含学生ID和姓名
 typedef struct {
     int id;                    // 学生ID
     char name[MAX_NAME_LEN];   // 学生姓名
 } Student;
- 
+
 // 链表节点结构体，包含学生数据和指向下一个节点的指针
 typedef struct Node {
     Student data;
     struct Node* next;
 } Node;
- 
+
 // 散列表，数组中每个元素是链表的头指针
 Node* hashTable[TABLE_SIZE] = {NULL};
- 
-// 散列函数，计算学生ID对应的散列表索引
+
+// 散列函数
 int hashFunction(int id) {
     return id % TABLE_SIZE;
 }
- 
-// 插入学生信息到散列表
+
+// 插入学生信息
 void insertStudent(Student s) {
     int index = hashFunction(s.id);
     Node* newNode = (Node*)malloc(sizeof(Node));
@@ -35,13 +35,13 @@ void insertStudent(Student s) {
     newNode->next = hashTable[index];
     hashTable[index] = newNode;
 }
- 
+
 // 删除学生信息
 void deleteStudent(int id) {
     int index = hashFunction(id);
     Node* curr = hashTable[index];
     Node* prev = NULL;
- 
+
     while (curr) {
         if (curr->data.id == id) {
             if (prev) prev->next = curr->next;
@@ -55,12 +55,12 @@ void deleteStudent(int id) {
     }
     printf("未找到该学生信息。\n");
 }
- 
+
 // 修改学生信息
 void updateStudent(int id) {
     int index = hashFunction(id);
     Node* curr = hashTable[index];
- 
+
     while (curr) {
         if (curr->data.id == id) {
             printf("输入新的姓名：");
@@ -72,12 +72,12 @@ void updateStudent(int id) {
     }
     printf("未找到该学生信息。\n");
 }
- 
+
 // 查询学生信息
 void queryStudent(int id) {
     int index = hashFunction(id);
     Node* curr = hashTable[index];
- 
+
     while (curr) {
         if (curr->data.id == id) {
             printf("学生ID: %d, 姓名: %s\n", curr->data.id, curr->data.name);
@@ -87,15 +87,15 @@ void queryStudent(int id) {
     }
     printf("未找到该学生信息。\n");
 }
- 
-// 保存学生信息到文件
+
+// 保存到文件
 void saveToFile(const char* filename) {
     FILE* file = fopen(filename, "w");
     if (!file) {
         perror("文件打开失败");
         return;
     }
- 
+
     for (int i = 0; i < TABLE_SIZE; i++) {
         Node* curr = hashTable[i];
         while (curr) {
@@ -106,6 +106,7 @@ void saveToFile(const char* filename) {
     fclose(file);
     printf("数据保存成功。\n");
 }
+
 // 从文件读取
 void loadFromFile(const char* filename) {
     FILE* file = fopen(filename, "r");
