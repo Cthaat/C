@@ -167,5 +167,6 @@ int main()
     free(head);
     free(B);
     free(C);
+    // 程序结束
     return 0; // 程序结束
 }
