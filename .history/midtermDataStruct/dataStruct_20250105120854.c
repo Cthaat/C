@@ -18,7 +18,6 @@ node* createNode(int data)
     // 初始化节点数据
     newNode->data = data;
     newNode->next = NULL;
-    // 返回新创建的节点
     return newNode;
 }
 
@@ -30,8 +29,7 @@ node* insert(node *head, int data)
     // 如果链表为空，则直接插入新节点
     if (head == NULL)
     {
-        // 如果链表为空，直接插入新节点
-        head->next = newNode;
+        head->next = newNode; // 如果链表为空，直接插入新节点
     }
     // 如果链表不为空，则遍历链表，找到插入位置
     else
@@ -163,10 +161,5 @@ int main()
     printList(B); // 打印 B 链表
     printf("C链表：");
     printList(C); // 打印 C 链表
-    
-    // 释放内存
-    free(head);
-    free(B);
-    free(C);
     return 0; // 程序结束
 }

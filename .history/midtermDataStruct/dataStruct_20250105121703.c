@@ -164,9 +164,5 @@ int main()
     printf("C链表：");
     printList(C); // 打印 C 链表
     
-    // 释放内存
-    free(head);
-    free(B);
-    free(C);
     return 0; // 程序结束
 }
