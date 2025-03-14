@@ -1,86 +1,70 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 
-#define MAX_INPUT_LEN 1024   // 输入最大长度
-#define MAX_ARGS 64          // 最大参数数量
-
-// 分割输入为命令和参数
-void parse_input(char *input, char **args) {
-    int i = 0;
-    char *token = strtok(input, " \t\n\r"); // 按空格、制表符、换行分割
-    while (token != NULL && i < MAX_ARGS - 1) {
-        args[i++] = token;
-        token = strtok(NULL, " \t\n\r");
-    }
-    args[i] = NULL; // 参数数组必须以 NULL 结尾
-}
-
-// 执行命令
-void execute_command(char **args) {
-    pid_t pid = fork();
-    if (pid == 0) { // 子进程
-        execvp(args[0], args);
-        // 如果 execvp 失败（如命令不存在）
-        perror("execvp");
-        exit(EXIT_FAILURE);
-    } else if (pid > 0) { // 父进程
-        int status;
-        waitpid(pid, &status, 0); // 等待子进程结束
-    } else {
-        perror("fork");
-    }
-}
-
-// 处理内置命令（如 exit, cd）
-int handle_builtin(char **args) {
-    if (strcmp(args[0], "exit") == 0) {
-        exit(EXIT_SUCCESS);
-    } else if (strcmp(args[0], "cd") == 0) {
-        if (args[1] == NULL) {
-            fprintf(stderr, "cd: missing argument\n");
-        } else {
-            if (chdir(args[1]) != 0) {
-                perror("cd");
-            }
-        }
-        return 1; // 表示已处理内置命令
-    }
-    return 0; // 非内置命令
-}
+#define MAX_INPUT_SIZE 1024
+#define MAX_ARGS 64
 
 int main() {
-    char input[MAX_INPUT_LEN];
+    char input[MAX_INPUT_SIZE];
     char *args[MAX_ARGS];
+    char *token;
+    int status;
+    pid_t pid;
 
     while (1) {
-        // 打印提示符
-        printf("myshell> ");
-        fflush(stdout);
+        printf("my_shell> ");
+        fflush(stdout); // 确保提示符立即显示
 
-        // 读取输入
-        if (fgets(input, MAX_INPUT_LEN, stdin) == NULL) {
-            break; // 处理 EOF（如 Ctrl+D）
+        if (fgets(input, sizeof(input), stdin) == NULL) {
+            printf("\n"); // 处理EOF (Ctrl+D)
+            break;
         }
 
-        // 解析输入
-        parse_input(input, args);
+        // 移除输入中的换行符
+        input[strcspn(input, "\n")] = 0;
 
-        // 处理空输入
-        if (args[0] == NULL) {
+        // 如果输入为空，则继续下一次循环
+        if (input[0] == '\0') {
             continue;
         }
 
-        // 处理内置命令
-        if (handle_builtin(args)) {
-            continue;
+        // 解析输入命令和参数
+        int i = 0;
+        token = strtok(input, " ");
+        while (token != NULL && i < MAX_ARGS - 1) {
+            args[i++] = token;
+            token = strtok(NULL, " ");
+        }
+        args[i] = NULL; // execvp的参数列表必须以NULL结尾
+
+        // 处理内置命令 (例如: exit)
+        if (strcmp(args[0], "exit") == 0) {
+            break;
         }
 
-        // 执行外部命令
-        execute_command(args);
+        // 创建子进程
+        pid = fork();
+
+        if (pid == -1) {
+            perror("fork");
+        } else if (pid == 0) {
+            // 子进程
+            // 使用execvp执行命令
+            execvp(args[0], args);
+
+            // 如果execvp返回，则表示执行失败
+            perror("execvp");
+            exit(EXIT_FAILURE);
+        } else {
+            // 父进程
+            // 等待子进程结束
+            if (waitpid(pid, &status, 0) == -1) {
+                perror("waitpid");
+            }
+        }
     }
-
-    return 0;
 }
